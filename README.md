@@ -1,5 +1,5 @@
-# PhoenixRTOS
-####Zadanie rekrutacyjne, Mateusz Niewiadomski 02/2021
+# PhoenixRTOS, Zadanie rekrutacyjne
+#### Mateusz Niewiadomski 02/2021
 Zadanie rekrutacyjne polegające na dodaniu do obrazu wynikowego programu wypisującego Hello World na konsolę systemu PhoenixRTOS
 
 ------------
