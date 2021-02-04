@@ -4,6 +4,7 @@ Zadanie rekrutacyjne polegające na dodaniu do obrazu wynikowego programu wypisu
 
 ------------
 
+
 ##### Zmiany dokonane w projekcie
 
 - Do obrazu wynikowego został dodany program *mn_hello* 
