@@ -1,6 +1,6 @@
 # PhoenixRTOS, Zadanie rekrutacyjne
 #### Mateusz Niewiadomski 02/2021
-Zadanie rekrutacyjne polegające na dodaniu do obrazu wynikowego programu wypisującego Hello World na konsolę systemu PhoenixRTOS.
+Zadanie rekrutacyjne polegające na dodaniu do obrazu systemu programu wypisującego Hello World na konsolę.
 - W brachu main opis zmian i spakowany obraz dysku
 - W branchu master pliki projektu RTOS z wprowadzonymi zmianami
 
