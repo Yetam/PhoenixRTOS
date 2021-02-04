@@ -1,0 +1,14 @@
+#
+# Makefile for phoenix-rtos-usb
+#
+# iMX6ULL usb drivers
+#
+# Copyright 2019 Phoenix Systems
+#
+
+include common/Makefile
+include client/Makefile
+include host/Makefile
+include drivers/telit-le910_host/Makefile
+include drivers/umass_host/Makefile
+include drivers/cdc_demo_client/Makefile

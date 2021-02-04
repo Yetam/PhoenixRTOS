@@ -1,0 +1,91 @@
+#
+# Makefile for libphoenix
+#
+# ARMv7 (Cortex-M3/M4) options
+#
+# Copyright 2018, 2020 Phoenix Systems
+#
+
+CROSS ?= arm-phoenix-
+
+MKDEP = $(CROSS)gcc -MM
+MKDEPFLAGS = $(CFLAGS)
+
+CC = $(CROSS)gcc
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -Og
+else
+	CFLAGS += -O2 -DNDEBUG #-DWATCHDOG
+endif
+
+ifeq ($(TARGET_FAMILY), armv7m7)
+	CFLAGS += -Wall -Wstrict-prototypes -g -I$(SRCDIR) -nostartfiles -nostdlib\
+		-mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-d16 -mthumb -fomit-frame-pointer\
+		-ffreestanding -mno-unaligned-access -DNOMMU
+
+else ifeq ($(TARGET_FAMILY), armv7m4)
+
+	CFLAGS += -Wall -Wstrict-prototypes -g -I$(SRCDIR) -nostartfiles -nostdlib\
+		-mthumb -fomit-frame-pointer -ffreestanding -mno-unaligned-access\
+		-DNOMMU -fstack-usage -mcpu=cortex-m4
+
+else ifeq ($(TARGET_FAMILY), armv7m3)
+	CFLAGS += -Wall -Wstrict-prototypes -g -I$(SRCDIR) -nostartfiles -nostdlib\
+		-mthumb -fomit-frame-pointer -ffreestanding -mno-unaligned-access\
+		-DNOMMU -fstack-usage -mcpu=cortex-m3
+endif
+
+ifeq ($(TARGET_SUBFAMILY), stm32l152xd)
+	RAM_SIZE=48
+	VADDR_KERNEL_INIT=8000000
+	KERNEL_TARGET_DEFINE=-DCPU_STM32L152XD -DNOMMU
+else ifeq ($(TARGET_SUBFAMILY), stm32l152xe)
+	RAM_SIZE=80
+	VADDR_KERNEL_INIT=8000000
+	KERNEL_TARGET_DEFINE=-DCPU_STM32L152XE -DNOMMU
+else ifeq ($(TARGET_SUBFAMILY), stm32l4x6)
+	RAM_SIZE=320
+	VADDR_KERNEL_INIT=8000000
+	KERNEL_TARGET_DEFINE=-DCPU_STM32L4X6 -DNOMMU
+else ifeq ($(TARGET_SUBFAMILY), imxrt105x)
+	RAM_SIZE=128
+	VADDR_KERNEL_INIT=0
+	KERNEL_TARGET_DEFINE=-DCPU_IMXRT105X -DNOMMU 
+else ifeq ($(TARGET_SUBFAMILY), imxrt106x)
+	RAM_SIZE=256
+	VADDR_KERNEL_INIT=0
+	KERNEL_TARGET_DEFINE=-DCPU_IMXRT106X -DNOMMU 
+else ifeq ($(TARGET_SUBFAMILY), imxrt117x)
+	RAM_SIZE=256
+	VADDR_KERNEL_INIT=0
+	KERNEL_TARGET_DEFINE=-DCPU_IMXRT117X -DNOMMU 
+else
+	$(error Incorrect TARGET.)
+endif
+
+
+LDFLAGS = -z max-page-size=0x10 --gc-sections -q
+
+ifeq ($(KERNEL), 1)
+	CFLAGS += -DRAM_SIZE=$(RAM_SIZE) $(KERNEL_TARGET_DEFINE) -ffixed-r9
+	LDFLAGS += -Tbss=20000000 -Tdata=20000000
+else
+	CFLAGS += -fpic -fpie -msingle-pic-base -mno-pic-data-is-text-relative
+endif
+
+
+CFLAGS += -fdata-sections -ffunction-sections
+
+AR = $(CROSS)ar
+ARFLAGS = -r
+
+LD = $(CROSS)ld
+
+GCCLIB := $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
+PHOENIXLIB := $(shell $(CC) $(CFLAGS) -print-file-name=libphoenix.a)
+LDLIBS := $(PHOENIXLIB) $(GCCLIB)
+
+OBJCOPY = $(CROSS)objcopy
+OBJDUMP = $(CROSS)objdump
+STRIP = $(CROSS)strip
