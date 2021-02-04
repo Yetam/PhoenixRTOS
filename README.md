@@ -11,7 +11,7 @@ Zadanie rekrutacyjne polegające na dodaniu do obrazu wynikowego programu wypisu
 
 - Do obrazu wynikowego został dodany program *mn_hello* 
 - Kod źródłowy oraz Makefile znajdują się w lokalizacji *phoenix-rtos-hello/*
-- W pliku *_targets/build.project.ia32-generic *została dodana linia 61 i 62
+- W pliku *_targets/build.project.ia32-generic* została dodana linia 61 i 62
 
 Program *mn_hello* jest kompilowany razem z całym projektem. Program w wynikowym obrazie systemu znajduje się na filesystemie w lokalizacji */usr/bin/mn_hello*
 
