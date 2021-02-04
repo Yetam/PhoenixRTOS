@@ -3,6 +3,7 @@
 Zadanie rekrutacyjne polegające na dodaniu do obrazu systemu programu wypisującego Hello World na konsolę.
 - W brachu main opis zmian i spakowany obraz dysku
 - W branchu master pliki projektu RTOS z wprowadzonymi zmianami
+Modyfikacje dotyczą tylko obrazu ia32
 
 ------------
 
